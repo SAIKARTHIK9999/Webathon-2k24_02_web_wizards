@@ -1,26 +1,28 @@
 "use client";
 import React, { useState } from 'react';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 const Activity = () => {
+  const router = useRouter();
   const [activity, setActivity] = useState('');
   const [duration, setDuration] = useState('');
   const [caloriesBurned, setCaloriesBurned] = useState('');
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Calculate calories burned based on the activity and duration
-    let caloriesPerMinute;
-    if (activity === 'walking') {
-      caloriesPerMinute = 5; // Example value, adjust as needed
-    } else if (activity === 'jogging') {
-      caloriesPerMinute = 10; // Example value, adjust as needed
-    } else {
-      caloriesPerMinute = 0; // Default value
+    try {
+      const response = await axios.post('http://localhost:5001/api/activities', {
+        activity,
+        duration,
+      });
+      setCaloriesBurned(response.data.caloriesBurned);
+      alert('Activity saved');
+      console.log('Activity saved:', response.data);
+      router.push('/goals');
+    } catch (error) {
+      console.error('Error logging activity:', error);
     }
-    const totalCaloriesBurned = caloriesPerMinute * parseInt(duration, 10);
-    console.log('Total calories burned:', totalCaloriesBurned); // Debugging statement
-    setCaloriesBurned(totalCaloriesBurned.toString());
-    console.log('Calories burned state:', caloriesBurned); // Debugging statement
   };
 
   return (
@@ -53,16 +55,8 @@ const Activity = () => {
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="caloriesBurned" className="block text-gray-700">Calories Burned:</label>
-          <input
-  type="text"
-  id="caloriesBurned"
-  value={caloriesBurned}
-  readOnly
-  className="w-full mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-500 bg-gray-100"
-/>
+         
         </div>
-       
         <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Log Activity</button>
       </form>
     </div>
@@ -70,5 +64,6 @@ const Activity = () => {
 };
 
 export default Activity;
+
 
 
