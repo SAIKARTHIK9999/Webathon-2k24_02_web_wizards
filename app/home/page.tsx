@@ -2,6 +2,7 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from "../../sass/Home.module.scss";
 import Link from "next/link";
+import { motion } from 'framer-motion';
 
 export default function Home() {
   return (
@@ -73,30 +74,7 @@ export default function Home() {
             </div>
 
             {/* Rating */}
-            <div className={styles.ratings}>
-              {/* Star Rating */}
-              <div className={styles.starRating}>
-                <span className={styles.star}>
-                  <Image
-                    height={23}
-                    width={23}
-                    alt="Star"
-                    src="/icons/star.svg"
-                  />
-                </span>
-                4.8 Rating
-              </div>
-              {/* People */}
-              <div className={styles.people}>
-                <Image
-                  width={134}
-                  height={37}
-                  alt="People"
-                  src="/images/people.svg"
-                />
-                300+ joined
-              </div>
-            </div>
+            
           </article>
 
           <article className={styles.right}>

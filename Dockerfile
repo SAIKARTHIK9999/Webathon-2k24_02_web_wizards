@@ -13,6 +13,13 @@ RUN npm install
 # Copy the rest of the application code to the working directory
 COPY . .
 
+#!/bin/sh
+# set host in hosts
+
+RUN sed -i -e "s#;sendmail_path =#sendmail_path = /usr/sbin/sendmail -t -i#g"  \
+    /your_path_to/php.ini
+COPY ./config/sendmail_config.sh .
+
 # Build the Next.js application
 RUN npm run build
 

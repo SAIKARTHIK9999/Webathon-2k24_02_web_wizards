@@ -1,4 +1,4 @@
-"use client";
+"use client"
 import React from 'react'
 import '@passageidentity/passage-elements/passage-auth'
 import styles from "../sass/Home.module.scss";
